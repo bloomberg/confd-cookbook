@@ -15,6 +15,10 @@ module ConfdCookbook
       provides(:confd_service)
       include PoiseService::ServiceMixin
       include ConfdCookbook::Mixin::Configuration
+
+      def onetime
+        false
+      end
     end
   end
 
