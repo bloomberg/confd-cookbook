@@ -10,13 +10,12 @@ require 'poise_service/service_mixin'
 module ConfdCookbook
   module Resource
     # @since 1.0.0
-    class ConfdService < Chef::Resource
+    class ConfdService < ConfdCookbook::Resource::ConfdConfig
       include Poise
       provides(:confd_service)
       include PoiseService::ServiceMixin
-      include ConfdCookbook::Mixin::Configuration
 
-      def onetime
+      def default_onetime
         false
       end
     end

@@ -6,10 +6,14 @@
 #
 
 module ConfdCookbook
-  module Mixin
+  module Resource
     # @since 1.0.0
-    module Configuration
-      attribute(:onetime, equal_to: [true, false], default: true)
+    class ConfdConfig < Chef::Resource
+      include Poise
+      provides(:confd_config)
+      actions(:create, :delete)
+
+      attribute(:onetime, equal_to: [true, false], default: lazy { default_onetime })
       attribute(:client_ca_keys, kind_of: String)
       attribute(:client_cert, kind_of: String)
       attribute(:client_key, kind_of: String)
@@ -22,6 +26,10 @@ module ConfdCookbook
       attribute(:interval, kind_of: Integer, default: 600)
       attribute(:srv_domain, kind_of: String)
       attribute(:watch, equal_to: [true, false], default: false)
+
+      def default_onetime
+        true
+      end
 
       def command
         ['confd'].tap do |c|
@@ -39,6 +47,20 @@ module ConfdCookbook
           c << ['-config-file', config_file] if config_file
           c << ['-srv-domain', srv_domain] if srv_domain
         end.flatten.join(' ')
+      end
+    end
+  end
+
+  module Provider
+    # @since 1.0.0
+    class ConfdConfig < Chef::Provider
+      include Poise
+      provides(:confd_config)
+
+      def action_create
+      end
+
+      def action_delete
       end
     end
   end

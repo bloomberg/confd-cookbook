@@ -9,10 +9,9 @@ require 'poise'
 
 module ConfdCookbook
   module Resource
-    class ConfdExecute < Chef::Resource
+    class ConfdExecute < ConfdCookbook::Resource::ConfdConfig
       include Poise(fused: true)
       provides(:confd_execute)
-      include ConfdCookbook::Mixin::Configuration
 
       action(:run) do
         notifying_block do
