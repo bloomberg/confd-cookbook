@@ -12,3 +12,4 @@ supports 'centos', '>= 5.8'
 
 depends 'poise', '~> 2.2'
 depends 'poise-service', '~> 1.0'
+depends 'rc', '~> 1.3'

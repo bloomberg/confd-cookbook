@@ -4,6 +4,7 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
+include_recipe 'rc::default'
 
 [node['confd']['template_directory'], node['confd']['resource_directory']].each do |dirname|
   directory dirname do
