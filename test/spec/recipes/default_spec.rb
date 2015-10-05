@@ -6,6 +6,7 @@ describe 'confd::default' do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04').converge('confd::default')
     end
 
+    it { expect(chef_run).to include_recipe('rc::default') }
     it do
       expect(chef_run).to create_remote_file('/opt/confd/bin/confd-0.10.0-linux-amd64')
       .with(source: 'https://github.com/kelseyhightower/confd/releases/download/v0.10.0/confd-0.10.0-linux-amd64')
@@ -26,6 +27,7 @@ describe 'confd::default' do
       end.converge('confd::default')
     end
 
+    it { expect(chef_run).to include_recipe('rc::default') }
     it { expect(chef_run).to create_directory('/etc/confd/templates') }
     it { expect(chef_run).to create_directory('/etc/confd/conf.d') }
     it { expect(chef_run).not_to create_directory('/opt/confd/bin') }
