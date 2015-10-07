@@ -6,30 +6,13 @@
 #
 include_recipe 'rc::default'
 
-[node['confd']['template_directory'], node['confd']['resource_directory']].each do |dirname|
-  directory dirname do
-    recursive true
-  end
+confd_config node['confd']['service_name'] do |r|
+  path node['confd']['service']['config_file']
+
+  node['confd']['config'].each_pair { |k,v| r.send(k, v) }
+  notifies :restart, "config_service[#{name}]", :delayed
 end
 
-package node['confd']['package_name'] do
-  version node['confd']['package_version']
-  action :upgrade
-  only_if { node['confd']['install_method'] == 'package' }
-end
-
-if node['confd']['install_method'] == 'binary'
-  basename = File.basename(node['confd']['remote_url'])
-  install_directory = directory File.join(node['confd']['install_path'], 'bin') do
-    recursive true
-  end
-
-  remote_file File.join(install_directory.path, basename) do
-    source node['confd']['remote_url']
-    checksum node['confd']['remote_checksum']
-  end
-
-  link File.join(install_directory.path, basename) do
-    to '/usr/local/bin/confd'
-  end
+confd_service node['confd']['service_name'] do |r|
+  node['confd']['service'].each_pair { |k, v| r.send(k, v) }
 end

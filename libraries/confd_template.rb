@@ -9,6 +9,8 @@ require 'poise'
 
 module ConfdCookbook
   module Resource
+    # A resource for managing confd templates.
+    # @since 1.0.0
     class ConfdTemplate < Chef::Resource
       include Poise(fused: true)
       provides(:confd_template)
@@ -25,6 +27,11 @@ module ConfdCookbook
 
       action(:create) do
         notifying_block do
+          [new_resource.template_directory, new_resource.resource_directory].each do |dirname|
+            directory ::File.dirname(dirname) do
+              recursive true
+            end
+          end
 
           file new_resource.template_path do
             content new_resource.template_content

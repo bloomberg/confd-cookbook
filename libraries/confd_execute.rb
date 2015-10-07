@@ -9,14 +9,17 @@ require 'poise'
 
 module ConfdCookbook
   module Resource
+    # A resource for executing confd command.
+    # @since 1.0.0
     class ConfdExecute < ConfdCookbook::Resource::ConfdConfig
       include Poise(fused: true)
       provides(:confd_execute)
 
       attribute(:config_file, kind_of: String, default: '/etc/confd/confd.toml')
+      attribute(:environment, kind_of: Hash, default: lazy { 'PATH' => '/usr/local/bin:/usr/bin:/bin' })
 
       def command
-        ['/usr/local/bin/confd'].tap do |c|
+        ['confd'].tap do |c|
           c << ['-onetime', onetime]
           c << ['-interval', interval]
           c << ['-keep-stage', keep_stage]
@@ -35,9 +38,13 @@ module ConfdCookbook
 
       action(:run) do
         notifying_block do
-          directory ::File.dirname(new_resource.config_file)
+          directory ::File.dirname(new_resource.config_file) do
+            recursive true
+          end
 
-          execute new_resource.command
+          execute new_resource.command do
+            environment new_resource.environment
+          end
         end
       end
     end
