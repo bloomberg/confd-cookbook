@@ -16,16 +16,24 @@ module ConfdCookbook
       provides(:confd_template)
 
       attribute(:path, kind_of: String, name_attribute: true)
+      attribute(:owner, kind_of: String)
+      attribute(:group, kind_of: String)
+      attribute(:mode, kind_of: String, default: '0644')
+
       attribute(:template_directory, kind_of: String, default: '/etc/confd/templates')
       attribute(:resource_directory, kind_of: String, default: '/etc/confd/conf.d')
 
-      attribute(:keys, kind_of: Array, default: [])
+      attribute(:prefix, kind_of: String)
+      attribute(:keys, kind_of: [String, Array], required: true)
+      attribute(:check_command, kind_of: String)
+      attribute(:reload_command, kind_of: String)
+
       attribute('template', template: true)
 
-      def to_toml
-      end
-
       action(:create) do
+        uid = Etc.getpwnam(new_resource.owner) if new_resource.owner
+        gid = Etc.getgrnam(new_resource.group) if new_resource.group
+
         notifying_block do
           [new_resource.template_directory, new_resource.resource_directory].each do |dirname|
             directory ::File.dirname(dirname) do
@@ -33,15 +41,43 @@ module ConfdCookbook
             end
           end
 
-          file new_resource.template_path do
+          basename = ::File.basename(new_resource.template_path)
+          file ::File.join(new_resource.template_directory, basename) do
             content new_resource.template_content
+            owner new_resource.template_owner
+            group new_resource.template_group
+            mode new_resource.template_mode
+          end
+
+          basename = ::File.basename(new_resource.path) + '.tmpl'
+          config = {
+            'keys' => [new_resource.keys].flatten,
+            'dest' => new_resource.path,
+            'src' => basename
+          }
+          config['uid'] = uid if uid
+          config['gid'] = gid if gid
+          config['prefix'] = new_resource.prefix if new_resource.prefix
+          config['mode'] = new_resource.mode if new_resource.mode
+          config['check_cmd'] = new_resource.check_command if new_resource.check_command
+          config['reload_cmd'] = new_resource.check_command if new_resource.reload_command
+
+          rc_file ::File.join(new_resource.resource_path, basename) do
+            type 'toml'
+            options('template' => config)
           end
         end
       end
 
       action(:destroy) do
         notifying_block do
-          file new_resource.path do
+          basename = ::File.basename(new_resource.template_path)
+          file ::File.join(new_resource.template_path, basename) do
+            action :delete
+          end
+
+          basename = ::File.basename(new_resource.path) + '.tmpl'
+          rc_file ::File.join(new_resource.resource_path, basename) do
             action :delete
           end
         end
