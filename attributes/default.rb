@@ -6,6 +6,8 @@
 #
 
 default['confd']['service_name'] = 'confd'
+
+default['confd']['config'] = {}
 default['confd']['service']['config_file'] = '/etc/confd/confd.toml'
 default['confd']['service']['install_method'] = 'binary'
 default['confd']['service']['install_path'] = '/opt/confd'

@@ -16,17 +16,17 @@ module ConfdCookbook
       provides(:confd_execute)
 
       attribute(:config_file, kind_of: String, default: '/etc/confd/confd.toml')
-      attribute(:environment, kind_of: Hash, default: lazy { 'PATH' => '/usr/local/bin:/usr/bin:/bin' })
+      attribute(:environment, kind_of: Hash, default: lazy { Hash.new(PATH: '/usr/local/bin:/usr/bin:/bin') })
 
       def command
         ['confd'].tap do |c|
-          c << ['-onetime', onetime]
           c << ['-interval', interval]
-          c << ['-keep-stage', keep_stage]
           c << ['-prefix', prefix]
           c << ['-scheme', scheme]
           c << ['-confdir', confdir]
-          c << ['-watch', watch]
+          c << ['-watch'] if watch
+          c << ['-onetime'] if onetime
+          c << ['-keep-stage'] if keep_stage
           c << ['-node', [nodes].flatten.join(',')]
           c << ['-auth-token', auth_token] if auth_token
           c << ['-client-ca-keys', client_cakeys] if client_cakeys

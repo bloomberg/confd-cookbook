@@ -20,7 +20,7 @@ module ConfdCookbook
       attribute(:directory, kind_of: String, default: '/var/run/confd')
       attribute(:install_method, equal_to: %w{package binary}, default: 'binary')
       attribute(:install_path, kind_of: String, default: '/opt/confd')
-      attribute(:package_name, kind_of: String)
+      attribute(:package_name, kind_of: String, default: 'confd')
       attribute(:package_version, kind_of: String)
       attribute(:remote_url, kind_of: String)
       attribute(:remote_checksum, kind_of: String)
@@ -47,7 +47,7 @@ module ConfdCookbook
           [new_resource.template_directory,
            new_resource.resource_directory,
            new_resource.directory].each do |dirname|
-            directory ::File.dirname(dirname) do
+            directory dirname do
               recursive true
             end
           end
