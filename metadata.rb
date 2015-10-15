@@ -5,6 +5,8 @@ license 'Apache 2.0'
 description 'Application cookbook which installs and configures confd.'
 long_description 'Application cookbook which installs and configures confd.'
 version '1.0.0'
+source_url 'https://github.com/johnbellone/confd-cookbook'
+issues_url 'https://github.com/johnbellone/confd-cookbook/issues'
 
 supports 'ubuntu', '>= 12.04'
 supports 'redhat', '>= 5.8'
