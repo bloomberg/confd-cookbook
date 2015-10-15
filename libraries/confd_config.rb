@@ -21,6 +21,7 @@ module ConfdCookbook
       attribute(:group, kind_of: String)
       attribute(:mode, kind_of: String, default: '0644')
 
+      attribute(:auth_token, kind_of: String)
       attribute(:onetime, equal_to: [true, false], default: lazy { default_onetime })
       attribute(:backend, equal_to: %w{consul dynamodb etcd redis zookeeper}, required: true)
       attribute(:client_cakeys, kind_of: String)
@@ -41,6 +42,7 @@ module ConfdCookbook
 
       def to_hash
         {
+          'auth_token' => auth_token,
           'backend' => backend,
           'onetime' => onetime,
           'interval' => interval,

@@ -27,8 +27,9 @@ module ConfdCookbook
           c << ['-scheme', scheme]
           c << ['-confdir', confdir]
           c << ['-watch', watch]
-          c << ['-nodes', [nodes].flatten.join(',')]
-          c << ['-client-cakeys', client_cakeys] if client_cakeys
+          c << ['-node', [nodes].flatten.join(',')]
+          c << ['-auth-token', auth_token] if auth_token
+          c << ['-client-ca-keys', client_cakeys] if client_cakeys
           c << ['-client-cert', client_cert] if client_cert
           c << ['-client-key', client_key] if client_key
           c << ['-config-file', config_file] if config_file
