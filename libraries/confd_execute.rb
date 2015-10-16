@@ -27,7 +27,7 @@ module ConfdCookbook
           c << ['-watch'] if watch
           c << ['-onetime'] if onetime
           c << ['-keep-stage'] if keep_stage
-          c << ['-node', [nodes].flatten.join(',')]
+          c << ['-node', [nodes].flatten]
           c << ['-auth-token', auth_token] if auth_token
           c << ['-client-ca-keys', client_cakeys] if client_cakeys
           c << ['-client-cert', client_cert] if client_cert

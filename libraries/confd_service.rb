@@ -61,10 +61,11 @@ module ConfdCookbook
             remote_file ::File.join(new_resource.install_path, 'bin', basename) do
               source new_resource.remote_url
               checksum new_resource.remote_checksum
+              mode '0755'
             end
 
-            link ::File.join(new_resource.install_path, 'bin', basename) do
-              to '/usr/local/bin/confd'
+            link '/usr/local/bin/confd' do
+              to ::File.join(new_resource.install_path, 'bin', basename)
             end
           end
         end

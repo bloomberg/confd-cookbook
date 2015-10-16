@@ -6,7 +6,6 @@
 #
 
 require 'poise'
-require 'toml'
 
 module ConfdCookbook
   module Resource
@@ -52,8 +51,7 @@ module ConfdCookbook
           'client_cert' => client_cert,
           'client_key' => client_key,
           'confdir' => confdir,
-          'log_level' => log_level,
-          'nodes' => nodes,
+          'nodes' => [nodes].flatten,
           'scheme' => scheme,
           'srv_domain' => srv_domain,
           'watch' => watch
@@ -70,6 +68,10 @@ module ConfdCookbook
 
       def action_create
         notifying_block do
+          directory ::File.dirname(new_resource.path) do
+            recursive true
+          end
+
           rc_file new_resource.path do
             type 'toml'
             options new_resource.to_hash
