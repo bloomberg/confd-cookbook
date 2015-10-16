@@ -57,7 +57,7 @@ module ConfdCookbook
           config['prefix'] = new_resource.prefix if new_resource.prefix
           config['mode'] = new_resource.mode if new_resource.mode
           config['check_cmd'] = new_resource.check_command if new_resource.check_command
-          config['reload_cmd'] = new_resource.check_command if new_resource.reload_command
+          config['reload_cmd'] = new_resource.reload_command if new_resource.reload_command
 
           rc_file ::File.join(new_resource.resource_directory, basename) do
             type 'toml'
@@ -68,12 +68,12 @@ module ConfdCookbook
 
       action(:destroy) do
         notifying_block do
-          basename = ::File.basename(new_resource.path)
+          basename = ::File.basename(new_resource.path) + '.tmpl'
           file ::File.join(new_resource.template_directory, basename) do
             action :delete
           end
 
-          basename = ::File.basename(new_resource.path) + '.tmpl'
+          basename = ::File.basename(new_resource.path)
           rc_file ::File.join(new_resource.resource_directory, basename) do
             action :delete
           end
