@@ -42,16 +42,16 @@ module ConfdCookbook
           end
 
           basename = ::File.basename(new_resource.path)
-          file ::File.join(new_resource.template_directory, basename) do
+          file ::File.join(new_resource.template_directory, "#{basename}.tmpl") do
             content new_resource.template_content
           end
 
-          basename = ::File.basename(new_resource.path) + '.tmpl'
           config = {
             'keys' => [new_resource.keys].flatten,
             'dest' => new_resource.path,
-            'src' => basename
+            'src' => ::File.join(new_resource.template_directory, "#{basename}.tmpl")
           }
+          config['watch'] = true
           config['uid'] = uid if uid
           config['gid'] = gid if gid
           config['prefix'] = new_resource.prefix if new_resource.prefix

@@ -12,8 +12,8 @@ describe ConfdCookbook::Resource::ConfdService do
     it { is_expected.to create_directory('/opt/confd/bin') }
 
     it do
-      is_expected.to create_link('/opt/confd/bin/confd-0.10.0-linux-amd64')
-      .with(to: '/usr/local/bin/confd')
+      is_expected.to create_link('/usr/local/bin/confd')
+      .with(to: '/opt/confd/bin/confd-0.10.0-linux-amd64')
     end
 
     it do
