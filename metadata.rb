@@ -4,7 +4,7 @@ maintainer_email 'jbellone@bloomberg.net'
 license 'Apache 2.0'
 description 'Application cookbook which installs and configures confd.'
 long_description 'Application cookbook which installs and configures confd.'
-version '1.0.3'
+version '1.0.4'
 source_url 'https://github.com/johnbellone/confd-cookbook'
 issues_url 'https://github.com/johnbellone/confd-cookbook/issues'
 

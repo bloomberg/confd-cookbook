@@ -4,7 +4,6 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-
 require 'poise'
 
 module ConfdCookbook
@@ -28,7 +27,7 @@ module ConfdCookbook
       attribute(:check_command, kind_of: String)
       attribute(:reload_command, kind_of: String)
 
-      attribute('template', template: true)
+      attribute('template', template: true, default_config: lazy { Hash.new('groups' => keys) })
 
       action(:create) do
         uid = Etc.getpwnam(new_resource.owner) if new_resource.owner
@@ -59,7 +58,7 @@ module ConfdCookbook
           config['check_cmd'] = new_resource.check_command if new_resource.check_command
           config['reload_cmd'] = new_resource.reload_command if new_resource.reload_command
 
-          rc_file ::File.join(new_resource.resource_directory, basename) do
+          rc_file ::File.join(new_resource.resource_directory, "#{basename}.toml") do
             type 'toml'
             options('template' => config)
           end
