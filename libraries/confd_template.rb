@@ -23,6 +23,7 @@ module ConfdCookbook
       attribute(:resource_directory, kind_of: String, default: '/etc/confd/conf.d')
 
       attribute(:prefix, kind_of: String)
+      attribute(:watch, equal_to: [true, false])
       attribute(:keys, kind_of: [String, Array], required: true)
       attribute(:check_command, kind_of: String)
       attribute(:reload_command, kind_of: String)
@@ -45,14 +46,18 @@ module ConfdCookbook
             content new_resource.template_content
           end
 
+          file new_resource.path do
+            action :touch
+          end
+
           config = {
             'keys' => [new_resource.keys].flatten,
             'dest' => new_resource.path,
-            'src' => ::File.join(new_resource.template_directory, "#{basename}.tmpl")
+            'src' => "#{basename}.tmpl")
           }
-          config['watch'] = true
           config['uid'] = uid if uid
           config['gid'] = gid if gid
+          config['watch'] = watch if new_resource.watch
           config['prefix'] = new_resource.prefix if new_resource.prefix
           config['mode'] = new_resource.mode if new_resource.mode
           config['check_cmd'] = new_resource.check_command if new_resource.check_command
