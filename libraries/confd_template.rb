@@ -53,7 +53,7 @@ module ConfdCookbook
           config = {
             'keys' => [new_resource.keys].flatten,
             'dest' => new_resource.path,
-            'src' => "#{basename}.tmpl")
+            'src' => "#{basename}.tmpl"
           }
           config['uid'] = uid if uid
           config['gid'] = gid if gid

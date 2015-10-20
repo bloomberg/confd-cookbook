@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [1.0.7]
+## [1.0.8]
 ### Bug Fixes
 - Fixes incorrect default options in template resource.
 - Fixes path to template resource file for configuration.
@@ -19,8 +19,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Resource for executing confd command.
 - Resource for running confd as a service.
 
-[Unreleased]: https://github.com/johnbellone/confd-cookbook/compare/v1.0.7...HEAD
-[1.0.7]: https://github.com/johnbellone/confd-cookbook/compare/v1.0.7...HEAD
+[Unreleased]: https://github.com/johnbellone/confd-cookbook/compare/v1.0.8...HEAD
+[1.0.8]: https://github.com/johnbellone/confd-cookbook/compare/v1.0.8...HEAD
 [1.0.4]: https://github.com/johnbellone/confd-cookbook/compare/v1.0.4...HEAD
 [1.0.0]: https://github.com/johnbellone/confd-cookbook/compare/v1.0.0...HEAD
 [1]: https://github.com/johnbellone/confd-iptables-cookbook
