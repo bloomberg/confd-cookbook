@@ -27,7 +27,7 @@ module ConfdCookbook
       attribute(:check_command, kind_of: String)
       attribute(:reload_command, kind_of: String)
 
-      attribute('template', template: true, default_options: lazy { Hash.new('keys' => keys) })
+      attribute('template', template: true, default_options: { new_resource: self })
 
       action(:create) do
         uid = Etc.getpwnam(new_resource.owner) if new_resource.owner
