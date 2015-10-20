@@ -1,5 +1,5 @@
 require 'chefspec'
-require 'chefspec/policyfile'
+require 'chefspec/berkshelf'
 require 'chefspec/cacher'
 require_relative '../../libraries/confd_config'
 require_relative '../../libraries/confd_execute'
