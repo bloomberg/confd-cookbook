@@ -4,10 +4,6 @@ gem 'poise-service', '~> 1.0'
 gem 'poise-boiler'
 gem 'toml'
 
-group :test, :development do
-  gem 'chef-dk'
-end
-
 group :lint do
   gem 'rubocop'
   gem 'foodcritic'
