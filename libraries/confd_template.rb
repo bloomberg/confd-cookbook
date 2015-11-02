@@ -48,6 +48,7 @@ module ConfdCookbook
 
           file new_resource.path do
             action :touch
+            not_if { ::File.exist?(path) }
           end
 
           config = {
