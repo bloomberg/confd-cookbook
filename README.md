@@ -1,4 +1,9 @@
 # confd-cookbook
+[![Build Status](https://img.shields.io/travis/bloomberg/confd-cookbook.svg)](https://travis-ci.org/bloomberg/confd-cookbook)
+[![Code Quality](https://img.shields.io/codeclimate/github/bloomberg/confd-cookbook.svg)](https://codeclimate.com/github/bloomberg/confd-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/confd.svg)](https://supermarket.chef.io/cookbooks/confd)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 Application cookbook which installs and configures [confd][0].
 
 It is often the case that application configuration files must be
