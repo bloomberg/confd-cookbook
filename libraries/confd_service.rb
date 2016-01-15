@@ -37,7 +37,6 @@ module ConfdCookbook
       include PoiseService::ServiceMixin
 
       def action_enable
-        new_resource.notifies(:restart, new_resource, :delayed)
         notifying_block do
           package new_resource.package_name do
             version new_resource.package_version
