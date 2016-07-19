@@ -8,6 +8,6 @@ named_run_list :debian, 'apt::default', run_list
 named_run_list :freebsd, 'freebsd::default', run_list
 named_run_list :windows, 'windows::default', run_list
 override['zookeeper-cluster']['config']['instance_name'] = 'localhost'
-override['zookeeper-cluster']['config']['ensemble'] = 'localhost'
+override['zookeeper-cluster']['config']['ensemble'] = %w{localhost}
 override['confd']['config']['backend'] = 'zookeeper'
-override['confd']['config']['nodes'] = 'localhost'
+override['confd']['config']['nodes'] = %w{localhost}
