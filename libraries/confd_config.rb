@@ -22,7 +22,7 @@ module ConfdCookbook
 
       attribute(:auth_token, kind_of: String)
       attribute(:onetime, equal_to: [true, false], default: lazy { default_onetime })
-      attribute(:backend, equal_to: %w{consul dynamodb etcd redis zookeeper}, required: true)
+      attribute(:backend, equal_to: %w{consul dynamodb etcd redis zookeeper env}, required: true)
       attribute(:client_cakeys, kind_of: String)
       attribute(:client_cert, kind_of: String)
       attribute(:client_key, kind_of: String)
